@@ -1,0 +1,52 @@
+;;; -*- Mode: Lisp -*-
+
+(in-package #:lml2)
+
+(html-file-page ("index")
+  (html
+   (:HEAD (:TITLE "CL-MathStats")
+          ((:LINK :REL "stylesheet" :TYPE "text/css" :HREF "style.css"))
+          ((:META :HTTP-EQUIV "Content-Type" :CONTENT "text/html; charset=ISO-8859-1")))
+   (:BODY
+    ((:DIV :CLASS "header")
+     (:H1 "CL-MathStats") "Words cannot express")
+    
+    (:H3 "What it is")
+    (:P "CL-MathStats is an unordered collection of mathematical routines. ")
+    (:P (rw:link :tinaa) " documentation for CL-MathStats is "
+        (rw:link :CL-MathStats-tinaa :title "available") ".")
+    
+    (:h3 "Mailing Lists")
+    (:ul 
+     (:li ((:a :href "http://common-lisp.net/cgi-bin/mailman/listinfo/cl-mathstats-announce") "cl-mathstats-announce")
+          ": A low volume, read only list for announcements.")
+     
+     (:li ((:a :href "http://common-lisp.net/cgi-bin/mailman/listinfo/cl-mathstats-devel") "cl-mathstats-devel")
+          ": A list for questions, patches, bug reports, and so on; It's for everything 
+other than announcements."))
+    
+    (:H3 "Where is it")
+    (:P "A Darcs repository is available (note that you'll also need Metatilities and Moptilities to get CL-MathStats to work). The commands are listed below:")
+    (:UL
+     (:LI "darcs get http://common-lisp.net/project/cl-mathstat/darcs/cl-mathstat")
+     (:LI "darcs get http://common-lisp.net/project/cl-containers/darcs/metatilities")
+     (:LI "darcs get http://common-lisp.net/project/cl-containers/darcs/moptilities"))
+    (:P "CL-MathStat (and friends) should also be ASDF installable.")
+    
+    (:H3 "What is happening")
+    (:P)
+    
+    ((:TABLE :BORDER "0") 
+     ((:TR :ALIGN "left" :VALIGN "top")
+      ((:TD :WIDTH "100px") "11 Nov 2005")
+      (:TD "Just getting things set up here.")))
+    
+    ((:DIV :CLASS "footer") 
+     "Last updated: " 
+     (lml-princ (metatilities:format-date "%A, %e %B %Y" (get-universal-time))))    
+    
+    ((:DIV :CLASS "common-lisp-link")
+     "Back to " ((:A :HREF "http://common-lisp.net/") "Common-lisp.net") ".")
+    
+    ((:DIV :CLASS "check")
+     ((:A :HREF "http://validator.w3.org/check/referer") "Valid XHTML 1.0 Strict")))))

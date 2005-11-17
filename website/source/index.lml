@@ -4,34 +4,38 @@
 
 (html-file-page ("index")
   (html
-   (:HEAD (:TITLE "CL-MathStats")
+   (:HEAD (:TITLE "ASDF-System-Connections")
           ((:LINK :REL "stylesheet" :TYPE "text/css" :HREF "style.css"))
           ((:META :HTTP-EQUIV "Content-Type" :CONTENT "text/html; charset=ISO-8859-1")))
    (:BODY
     ((:DIV :CLASS "header")
-     (:H1 "CL-MathStats") "Words cannot express")
+     (:H1 "ASDF-System-Connections") "Sticking it together since 2005")
     
     (:H3 "What it is")
-    (:P "CL-MathStats is an unordered collection of mathematical routines. ")
-    (:P (rw:link :tinaa) " documentation for CL-MathStats is "
-        (rw:link :CL-MathStats-tinaa :title "available") ".")
+    (:P "ASDF-System-Connections provides auto-loading of systems that only make sense when several other systems are loaded. If I'm lucky, an example will make this clear!")
+    (:P (rw:link :cl-containers) " and " (rw:link :cl-variates) " are separate systems and can therefore be loaded independently. If both of them are loaded, however, then it makes sense to also load code that uses CL-Variates to sample random elements from containers. Rather than requiring you to remember to load that extra system (and to load it only after both Cl-Containers and CL-Variates are loaded), ASDF-System-Connections lets you set things up so that loading happens automatically.")
+    (:P "Here is a simple example from " (rw:link :metabang.bind) "'s system definition:")
+    (:PRE
+     "(asdf:defsystem-connection bind-and-metatilities
+       :requires (metabang.bind metatilities-base)
+       :perform (load-op :after (op c)
+                         (use-package (find-package \"METABANG.BIND\") 
+                                      (find-package \"METATILITIES\"))))")
+    (:P "The " (:em "requires") " clause specifies the other systems that must be loaded before this connection will be activated. The rest of the system definition is regular " (rw:link :asdf) ". ASDF-System-connections will be loaded as soon as the systems they require are all loaded and they will only be loaded once. Before loading a system that uses a system connection, you should load ASDF-System-Connections in the usual manner:")
+    (:PRE
+     "(asdf:oos 'asdf:load-op 'asdf-system-connections)")
+    
+    
     
     (:h3 "Mailing Lists")
-    (:ul 
-     (:li ((:a :href "http://common-lisp.net/cgi-bin/mailman/listinfo/cl-mathstats-announce") "cl-mathstats-announce")
-          ": A low volume, read only list for announcements.")
-     
-     (:li ((:a :href "http://common-lisp.net/cgi-bin/mailman/listinfo/cl-mathstats-devel") "cl-mathstats-devel")
-          ": A list for questions, patches, bug reports, and so on; It's for everything 
-other than announcements."))
+    (:P "Nope. Sorry, there isn't one. You can, however, contact " (rw:link :mail-gwking) ".")
+    
     
     (:H3 "Where is it")
-    (:P "A Darcs repository is available (note that you'll also need Metatilities and Moptilities to get CL-MathStats to work). The commands are listed below:")
+    (:P "A " (rw:link :darcs) " repository is available. The command to get it is below:")
     (:UL
-     (:LI "darcs get http://common-lisp.net/project/cl-mathstat/darcs/cl-mathstat")
-     (:LI "darcs get http://common-lisp.net/project/cl-containers/darcs/metatilities")
-     (:LI "darcs get http://common-lisp.net/project/cl-containers/darcs/moptilities"))
-    (:P "CL-MathStat (and friends) should also be ASDF installable.")
+     (:LI "darcs get http://common-lisp.net/project/cl-containers/asdf-system-connections/darcs/asdf-system-connections"))
+    (:P "ASDF-System-Connections should also be " (rw:link :asdf-install :title "ASDF installable") " (and here is my " (rw:link :gpg-gwking :title "GPG Key") "). There's also a handy " (rw:link :asdf-system-connections-package :title "gzipped tar file") ".") 
     
     (:H3 "What is happening")
     (:P)

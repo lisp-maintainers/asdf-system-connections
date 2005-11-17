@@ -4,7 +4,7 @@
           defsystem-connection))
 
 ;;; ---------------------------------------------------------------------------
-;;; slightly poor person's system interconnection facility
+;;; not particularly rich person's system interconnection facility
 ;;; ---------------------------------------------------------------------------
 
 (defclass system-connection (system)

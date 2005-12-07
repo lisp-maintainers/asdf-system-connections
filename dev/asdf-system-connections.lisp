@@ -54,8 +54,9 @@
 
 (defun system-loaded-p (system-name)
   (let ((load-op (make-instance 'load-op))
-        (system (find-system system-name)))
-    (and (operation-done-p load-op system)
+        (system (find-system system-name nil)))
+    (and system 
+         (operation-done-p load-op system)
          (null (traverse load-op system)))))
 
 ;;; ---------------------------------------------------------------------------

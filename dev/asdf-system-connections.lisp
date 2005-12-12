@@ -55,9 +55,13 @@
 (defun system-loaded-p (system-name)
   (let ((load-op (make-instance 'load-op))
         (system (find-system system-name nil)))
-    (and system 
-         (operation-done-p load-op system)
-         (null (traverse load-op system)))))
+    (handler-case 
+	(and system 
+	     (operation-done-p load-op system)
+	     (null (traverse load-op system)))
+      (error () 
+	;; just treat any error as 'not loaded' for now...
+	nil))))
 
 ;;; ---------------------------------------------------------------------------
 

@@ -53,7 +53,7 @@
 ;;; ---------------------------------------------------------------------------
 
 (defun system-loaded-p (system-name)
-  (let ((system (find-system system-name nil)))
+  (let ((system (find-system-in-memory system-name nil)))
     (when system
       (gethash 'load-op (asdf::component-operation-times system)))))
 
@@ -66,8 +66,13 @@
 ;;; ---------------------------------------------------------------------------
 
 (defmethod operation-done-p :around ((o load-op) (c system))
-  (let ((it (find-system c)))
+  (let ((it (find-system-in-memory c)))
     (if (typep it 'system-connection)
       (been-loaded? it)
       (call-next-method))))
 
+;;; ---------------------------------------------------------------------------
+
+(defun find-system-in-memory (system-name)
+  (let ((name (coerce-name system-name)))
+    (not (null (gethash name *defined-systems*)))))

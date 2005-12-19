@@ -53,15 +53,9 @@
 ;;; ---------------------------------------------------------------------------
 
 (defun system-loaded-p (system-name)
-  (let ((load-op (make-instance 'load-op))
-        (system (find-system system-name nil)))
-    (handler-case 
-	(and system 
-	     (operation-done-p load-op system)
-	     (null (traverse load-op system)))
-      (error () 
-	;; just treat any error as 'not loaded' for now...
-	nil))))
+  (let ((system (find-system system-name nil)))
+    (when system
+      (gethash 'load-op (asdf::component-operation-times system)))))
 
 ;;; ---------------------------------------------------------------------------
 

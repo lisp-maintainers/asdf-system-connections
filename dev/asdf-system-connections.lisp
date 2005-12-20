@@ -53,7 +53,7 @@
 ;;; ---------------------------------------------------------------------------
 
 (defun system-loaded-p (system-name)
-  (let ((system (find-system-in-memory system-name nil)))
+  (let ((system (find-system-in-memory system-name)))
     (when system
       (gethash 'load-op (asdf::component-operation-times system)))))
 
@@ -74,5 +74,7 @@
 ;;; ---------------------------------------------------------------------------
 
 (defun find-system-in-memory (system-name)
-  (let ((name (coerce-name system-name)))
-    (not (null (gethash name *defined-systems*)))))
+  (let* ((name (coerce-name system-name))
+        (system (gethash name *defined-systems*)))
+    (when system
+      (cdr system))))

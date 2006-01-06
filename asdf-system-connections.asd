@@ -6,7 +6,7 @@
 
 (defsystem asdf-system-connections
   :version "0.8"
-  :author "Gary King <gwking@cs.umass.edu>"
+  :author "Gary King <gwking@metabang.com>"
   :maintainer "Gary Warren King <gwking@metabang.com>"
   :licence "MIT Style License"
   :description "Allows for ASDF system to be connected so that auto-loading may occur."

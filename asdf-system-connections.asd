@@ -11,7 +11,11 @@
   :licence "MIT Style License"
   :description "Allows for ASDF system to be connected so that auto-loading may occur."
   :components ((:module "dev"
-                        :components ((:file "asdf-system-connections")))))
+                        :components ((:file "asdf-system-connections")))
+               
+               (:module "website"
+                        :components ((:module "source"
+                                              :components ((:static-file "index.lml")))))))
 
 
 

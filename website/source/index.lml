@@ -30,12 +30,12 @@
         "(asdf:oos 'asdf:load-op 'asdf-system-connections)")       
        
        
-       ((:A :NAME "mailing-lists"))
+       ((:A :HREF "mailing-lists"))
        (:h3 "Mailing Lists")
        (:P "Nope. Sorry, there isn't one. You can, however, contact " (rw:link :mail-gwking) ".")
        
        
-       ((:A :NAME "downloads"))
+       ((:A :HREF "downloads"))
        (:H3 "Where is it")
        (:P "A " (rw:link :darcs) " repository is available. The command to get it is below:")
        (:UL
@@ -43,12 +43,12 @@
          (:LI "darcs get http://common-lisp.net/project/cl-containers/asdf-system-connections/darcs/asdf-system-connections")))
        (:P "ASDF-System-Connections should also be " (rw:link :asdf-install :title "ASDF installable") " (and here is my " (rw:link :gpg-gwking :title "GPG Key") "). There's also a handy " (rw:link :asdf-system-connections-package :title "gzipped tar file") ".") 
        
-       ((:A :NAME "news"))
+       ((:A :HREF "news"))
        (:H3 "What is happening")
        (:P) 
        ((:TABLE :BORDER "0") 
         ((:TR :ALIGN "left" :VALIGN "top")
-         ((:TD :WIDTH "100px") "11 Nov 2005")
+         ((:TD) "11 Nov 2005")
          (:TD "Just getting things set up here."))))))
     
     ((:DIV :CLASS "footer")

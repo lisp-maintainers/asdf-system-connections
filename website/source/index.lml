@@ -10,11 +10,10 @@
     (generate-two-line-header
      "ASDF-System-Connections" "Sticking it together since 2005")
     
-    ((:TABLE :CLASS "system-overview")
-     (:tr
-      (generate-system-sidebar)
-      
-      ((:TD :CLASS "system-description")
+    ((:DIV :CLASS "contents")
+     (generate-system-sidebar)
+     
+     ((:DIV :CLASS "system-description")
        (:H3 "What it is")
        (:P "ASDF-System-Connections provides auto-loading of systems that only make sense when several other systems are loaded. If I'm lucky, an example will make this clear!")
        (:P (rw:link :cl-containers) " and " (rw:link :cl-variates) " are separate systems and can therefore be loaded independently. If both of them are loaded, however, then it makes sense to also load code that uses CL-Variates to sample random elements from containers. Rather than requiring you to remember to load that extra system (and to load it only after both Cl-Containers and CL-Variates are loaded), ASDF-System-Connections lets you set things up so that loading happens automatically.")
@@ -49,7 +48,7 @@
        ((:TABLE :BORDER "0") 
         ((:TR :ALIGN "left" :VALIGN "top")
          ((:TD) "11 Nov 2005")
-         (:TD "Just getting things set up here."))))))
+         (:TD "Just getting things set up here.")))))
     
     ((:DIV :CLASS "footer")
      (generate-button-row 

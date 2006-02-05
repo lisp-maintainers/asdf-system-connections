@@ -1,7 +1,8 @@
 (in-package asdf)
 
-(export '(map-system-connections
-          defsystem-connection))
+(eval-when (:compile-toplevel)
+  (export '(map-system-connections
+	    defsystem-connection)))
 
 ;;; ---------------------------------------------------------------------------
 ;;; not particularly rich person's system interconnection facility

@@ -1,6 +1,6 @@
 (in-package asdf)
 
-(eval-when (:compile-toplevel)
+(eval-when (:compile-toplevel :load-toplevel)
   (export '(map-system-connections
 	    defsystem-connection)))
 

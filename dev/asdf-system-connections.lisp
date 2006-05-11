@@ -1,4 +1,4 @@
-(in-package asdf)
+(in-package #:asdf)
 
 (eval-when (:compile-toplevel :load-toplevel)
   (export '(map-system-connections

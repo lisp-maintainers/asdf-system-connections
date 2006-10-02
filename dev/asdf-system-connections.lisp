@@ -79,3 +79,5 @@
         (system (gethash name *defined-systems*)))
     (when system
       (cdr system))))
+
+(pushnew :asdf-system-connections *features*)

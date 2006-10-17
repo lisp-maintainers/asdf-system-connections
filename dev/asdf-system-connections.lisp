@@ -39,7 +39,8 @@
   (map-system-connections 
    (lambda (connection)
      (when (and (required-systems-loaded-p connection)
-                (not (system-loaded-p (component-name connection))))
+                (not (system-loaded-p (component-name connection)))
+                (not (been-loaded? connection)))
        (setf (been-loaded? connection) t)
        (asdf:oos 'asdf:load-op (component-name connection) :force t)))))
 

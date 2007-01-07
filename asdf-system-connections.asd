@@ -5,7 +5,7 @@
 (in-package #:asdf-system-connections)
 
 (defsystem asdf-system-connections
-  :version "0.8.1"
+  :version "0.8.2"
   :author "Gary Warren King <gwking@metabang.com>"
   :maintainer "Gary Warren King <gwking@metabang.com>"
   :licence "MIT Style License"

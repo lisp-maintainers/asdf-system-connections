@@ -4,53 +4,43 @@
 
 (html-file-page ("index")
   (html
-   (:HEAD (:TITLE "ASDF-System-Connections")
+   (:head (:title "ASDF-System-Connections")
           (generate-shared-headers))
-   (:BODY
+   (:body
     (generate-two-line-header
      "ASDF-System-Connections" "Sticking it together since 2005")
     
-    ((:DIV :CLASS "contents")
-     (generate-system-sidebar)
+    ((:div :class "contents")
+     (generate-system-sidebar :news? nil)
      
-     ((:DIV :CLASS "system-description")
-       (:H3 "What it is")
-       (:P "ASDF-System-Connections provides auto-loading of systems that only make sense when several other systems are loaded. If I'm lucky, an example will make this clear!")
-       (:P (rw:link :cl-containers) " and " (rw:link :cl-variates) " are separate systems and can therefore be loaded independently. If both of them are loaded, however, then it makes sense to also load code that uses CL-Variates to sample random elements from containers. Rather than requiring you to remember to load that extra system (and to load it only after both Cl-Containers and CL-Variates are loaded), ASDF-System-Connections lets you set things up so that loading happens automatically.")
-       (:P "Here is a simple example from " (rw:link :metabang-bind) "'s system definition:")
-       ((:PRE :CLASS "code-block")
+     ((:div :class "system-description")
+       (:h3 "What it is")
+       (:p "ASDF-System-Connections provides auto-loading of systems that only make sense when several other systems are loaded. If I'm lucky, an example will make this clear!")
+       (:p (rw:link :cl-containers) " and " (rw:link :cl-variates) " are separate systems and can therefore be loaded independently. If both of them are loaded, however, then it makes sense to also load code that uses CL-Variates to sample random elements from containers. Rather than requiring you to remember to load that extra system (and to load it only after both Cl-Containers and CL-Variates are loaded), ASDF-System-Connections lets you set things up so that loading happens automatically.")
+       (:p "Here is a simple example from " (rw:link :metabang-bind) "'s system definition:")
+       ((:pre :class "code-block")
         "(asdf:defsystem-connection bind-and-metatilities
        :requires (metabang-bind metatilities-base)
        :perform (load-op :after (op c)
-                         (use-package (find-package \"METABANG-BIND\") 
-                                      (find-package \"METATILITIES\"))))")
-       (:P "The " (:em "requires") " clause specifies the other systems that must be loaded before this connection will be activated. The rest of the system definition is regular " (rw:link :asdf) ". ASDF-System-connections will be loaded as soon as the systems they require are all loaded and they will only be loaded once. Before loading a system that uses a system connection, you should load ASDF-System-Connections in the usual manner:")
-       ((:PRE :CLASS "code-block")
+                         (use-package (find-package :metabang-bind) 
+                                      (find-package :metatilities))))")
+       (:p "The " (:em "requires") " clause specifies the other systems that must be loaded before this connection will be activated. The rest of the system definition is regular " (rw:link :asdf) ". ASDF-System-connections will be loaded as soon as the systems they require are all loaded and they will only be loaded once. Before loading a system that uses a system connection, you should load ASDF-System-Connections in the usual manner:")
+       ((:pre :class "code-block")
         "(asdf:oos 'asdf:load-op 'asdf-system-connections)")       
        
-       
-       ((:A :NAME "mailing-lists"))
+       ((:a :name "mailing-lists"))
        (:h3 "Mailing Lists")
-       (:P "Nope. Sorry, there isn't one. You can, however, contact " (rw:link :mail-gwking) ".")
+       (:p "Nope. Sorry, there isn't one. You can, however, contact " (rw:link :mail-gwking) ". The best way to keep updated is to follow the metabang weblog: " ((:a :href "http://www.metabang.com/unclogit/" :title "unClog - opening it up with Common Lisp") "unClog"))
        
-       
-       ((:A :NAME "downloads"))
-       (:H3 "Where is it")
-       (:P "A " (rw:link :darcs) " repository is available. The command to get it is below:")
-       (:UL
-        ((:SPAN :CLASS "code-block")
-         (:LI "darcs get http://common-lisp.net/project/cl-containers/asdf-system-connections/darcs/asdf-system-connections")))
-       (:P "ASDF-System-Connections should also be " (rw:link :asdf-install :title "ASDF installable") " (and here is my " (rw:link :gpg-gwking :title "GPG Key") "). There's also a handy " (rw:link :asdf-system-connections-package :title "gzipped tar file") ".") 
-       
-       ((:A :NAME "news"))
-       (:H3 "What is happening")
-       (:P) 
-       ((:TABLE :CLASS "system-news") 
-        (:TR
-         (:TH "11 Nov 2005")
-         (:TD "Just getting things set up here.")))))
+       ((:a :name "downloads"))
+       (:h3 "Where is it")
+       (:p "A " (rw:link :darcs) " repository is available. The command to get it is below:")
+       (:ul
+        ((:pre :class "code-block")
+         (:li "darcs get http://common-lisp.net/project/cl-containers/asdf-system-connections/darcs/asdf-system-connections")))
+       (:p "ASDF-System-Connections should also be " (rw:link :asdf-install :title "ASDF installable") " (and here is my " (rw:link :gpg-gwking :title "GPG Key") "). There's also a handy " (rw:link :asdf-system-connections-package :title "gzipped tar file") ".")))
     
-    ((:DIV :CLASS "footer")
+    ((:div :class "footer")
      (generate-button-row 
       (format nil "Last updated: ~A" 
               (format-date "%A, %e %B %Y" (get-universal-time))))))))

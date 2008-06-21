@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-USER; Base: 10 -*-
 
-(defpackage #:asdf-system-connections (:use #:cl #:asdf))
-(in-package #:asdf-system-connections)
+(defpackage #:asdf-system-connections-system (:use #:cl #:asdf))
+(in-package #:asdf-system-connections-system)
 
 (defsystem asdf-system-connections
   :version "0.8.3"
@@ -12,8 +12,7 @@
   :components 
   ((:module 
     "dev"
-    :components ((:file "asdf-system-connections")))
-   
+    :components ((:file "asdf-system-connections")))   
    (:module 
     "website"
     :components ((:module

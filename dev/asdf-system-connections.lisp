@@ -24,11 +24,13 @@
 ;;; ---------------------------------------------------------------------------
 
 (defmacro defsystem-connection (name &body options)
-  (let ((requires (getf options :requires)))
+  (let ((requires (getf options :requires))
+        (class (getf options :class 'system-connection)))
     (remf options :requires)
+    (remf options :class)
     `(progn
        (defsystem ,name
-         :class system-connection
+         :class ,class
          :systems-required ,requires
          ,@options) 
        (values ',name))))

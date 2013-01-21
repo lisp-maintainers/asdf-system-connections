@@ -9,8 +9,7 @@
 ;;; ---------------------------------------------------------------------------
 
 (defclass system-connection (system)
-  ((systems-required :initarg :systems-required :reader systems-required)
-   (been-loaded? :accessor been-loaded? :initform nil)))
+  ((systems-required :initarg :systems-required :reader systems-required)))
 
 ;;; ---------------------------------------------------------------------------
 
@@ -31,56 +30,35 @@
     `(progn
        (defsystem ,name
          :class ,class
+         :depends-on ,requires
          :systems-required ,requires
-         ,@options) 
+         ,@options)
        (values ',name))))
 
 ;;; ---------------------------------------------------------------------------
 
 (defun load-connected-systems ()
-  (map-system-connections 
+  (map-system-connections
    (lambda (connection)
      (when (and (required-systems-loaded-p connection)
-                (not (system-loaded-p (component-name connection)))
-                (not (been-loaded? connection)))
-       (setf (been-loaded? connection) t)
-       (asdf:oos 'asdf:load-op (component-name connection) :force t)))))
-
-#+Test
-(load-connected-systems)
+                (not (system-loaded-p (component-name connection))))
+       (asdf:load-system (component-name connection))))))
 
 (defun required-systems-loaded-p (connection)
-  (every (lambda (system)
-           (system-loaded-p system))
-         (systems-required connection)))
+  (every #'system-loaded-p (systems-required connection)))
 
 ;;; ---------------------------------------------------------------------------
 
 (defun system-loaded-p (system-name)
-  (let ((system (find-system-in-memory system-name)))
-    (when system
-      (gethash 'load-op (asdf::component-operation-times system)))))
+  (aif (cdr (system-registered-p system-name))
+       (component-operation-time (make-instance 'load-op) it)))
 
 ;;; ---------------------------------------------------------------------------
 
-(defmethod perform :around ((operation load-op) (system system))
-  (call-next-method)
+(defmethod operate :after (operation-class system &key &allow-other-keys)
+  (declare (ignore operation-class system))
   (load-connected-systems))
 
 ;;; ---------------------------------------------------------------------------
-
-(defmethod operation-done-p :around ((o load-op) (c system))
-  (let ((it (find-system-in-memory c)))
-    (if (typep it 'system-connection)
-      (been-loaded? it)
-      (call-next-method))))
-
-;;; ---------------------------------------------------------------------------
-
-(defun find-system-in-memory (system-name)
-  (let* ((name (coerce-name system-name))
-        (system (gethash name *defined-systems*)))
-    (when system
-      (cdr system))))
 
 (pushnew :asdf-system-connections *features*)

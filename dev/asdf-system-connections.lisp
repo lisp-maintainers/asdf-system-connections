@@ -50,13 +50,13 @@
 ;;; ---------------------------------------------------------------------------
 
 (defun system-loaded-p (system-name)
-  (aif (cdr (system-registered-p system-name))
-       (component-operation-time (make-instance 'load-op) it)))
+	(let ((it (cdr (system-registered-p system-name))))
+    (component-operation-time (make-instance 'load-op) it)))
 
 ;;; ---------------------------------------------------------------------------
 
 (defmethod operate :after (operation-class system &key &allow-other-keys)
-  (declare (ignore operation-class system))
+  (declare (ignorable operation-class system))
   (load-connected-systems))
 
 ;;; ---------------------------------------------------------------------------

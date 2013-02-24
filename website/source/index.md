@@ -11,7 +11,7 @@
 
 </div>
 <div class="system-description">
-    
+
 ### What it is
 
 ASDF-System-Connections provides auto-loading of systems that
@@ -55,24 +55,24 @@ the metabang weblog: [unClog][]
 
 ### Where is it
 
-A [darcs][] repository is available. The command to get it
-is below:
+the current ASDF-System-Connections repository is on
+[github][github-asdf-System-Connections] and you can clone it using:
 
-    darcs get http://common-lisp.net/project/cl-containers/asdf-system-connections/darcs/asdf-system-connections
+    git clone git://github.com/gwkkwg/asdf-System-Connections
 
-ASDF-System-Connections is [ASDF installable][asdf-install].
 Its CLiki home is right [where][cliki-home] you'd expect.
 
-There's also a handy [gzipped tar file][tarball].
 
 {anchor news}
 
 ### What is happening
 
 <dl>
+<dt>24 February 2013</dt>
+<dd>Updates to make ASC happ(ier) with ASDF; website tweaks</dd>
+
 <dt>19 October 2008</dt>
-<dd>Website rework -- no fire, just smoke
-    </dd>
+<dd>Website rework -- no fire, just smoke</dd>
     </dl>
 </div>
 </div>

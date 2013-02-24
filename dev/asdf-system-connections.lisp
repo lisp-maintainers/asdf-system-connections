@@ -50,8 +50,9 @@
 ;;; ---------------------------------------------------------------------------
 
 (defun system-loaded-p (system-name)
-	(let ((it (cdr (system-registered-p system-name))))
-    (component-operation-time (make-instance 'load-op) it)))
+  (let ((it (cdr (system-registered-p system-name))))
+    (and it
+	 (component-operation-time (make-instance 'load-op) it)))) 
 
 ;;; ---------------------------------------------------------------------------
 

@@ -1,8 +1,10 @@
 (in-package #:asdf)
 
 (eval-when (:compile-toplevel :load-toplevel)
-  (export '(map-system-connections
-	    defsystem-connection)))
+  (export '(map-system-connections defsystem-connection))
+
+  (when (find-package '#:asdf/interface)
+    (export '(map-system-connections defsystem-connection) '#:asdf/interface)))
 
 ;;; ---------------------------------------------------------------------------
 ;;; not particularly rich person's system interconnection facility

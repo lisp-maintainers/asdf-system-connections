@@ -1,10 +1,7 @@
-(in-package #:asdf)
+(in-package :asdf)
 
-(eval-when (:compile-toplevel :load-toplevel)
-  (export '(map-system-connections defsystem-connection))
-
-  (when (find-package '#:asdf/interface)
-    (export '(map-system-connections defsystem-connection) '#:asdf/interface)))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (export '(map-system-connections defsystem-connection)))
 
 ;;; ---------------------------------------------------------------------------
 ;;; not particularly rich person's system interconnection facility
@@ -16,11 +13,8 @@
 ;;; ---------------------------------------------------------------------------
 
 (defun map-system-connections (fn)
-  (maphash (lambda (k v)
-             (declare (ignore k))
-             (when (typep (cdr v) 'system-connection)
-               (funcall fn (cdr v))))
-           *defined-systems*))
+  (map-systems
+   (lambda (s) (when (typep s 'system-connection) (funcall fn s)))))
 
 ;;; ---------------------------------------------------------------------------
 
@@ -44,22 +38,23 @@
    (lambda (connection)
      (when (and (required-systems-loaded-p connection)
                 (not (system-loaded-p (component-name connection))))
-       (asdf:load-system (component-name connection))))))
+       (load-system (component-name connection))))))
 
 (defun required-systems-loaded-p (connection)
   (every #'system-loaded-p (systems-required connection)))
 
 ;;; ---------------------------------------------------------------------------
+(unless (fboundp 'registered-system)
+  (defun registered-system (system-name)
+    (cdr (system-registered-p system-name))))
 
 (defun system-loaded-p (system-name)
-  (let ((it (cdr (system-registered-p system-name))))
-    (and it
-	 (component-operation-time (make-instance 'load-op) it)))) 
+  (if-let (it (registered-system system-name))
+    (component-operation-time (make-operation 'load-op) it)))
 
 ;;; ---------------------------------------------------------------------------
 
-(defmethod operate :after (operation-class system &key &allow-other-keys)
-  (declare (ignorable operation-class system))
+(defmethod operate :after ((operation t) (component t) &key &allow-other-keys)
   (load-connected-systems))
 
 ;;; ---------------------------------------------------------------------------

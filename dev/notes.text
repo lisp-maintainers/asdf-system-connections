@@ -4,18 +4,15 @@
         (directory "user-home:darcs;asdf-systems;*.asd"))
 
 
-
 "user-home:darcs;asdf-systems;metabang.bind.asd"
 
-(compute-applicable-methods 
+(compute-applicable-methods
  #'asdf:operation-done-p
- (list (make-instance 'asdf:load-op) (asdf:find-system 'metabang.bind)))
+ (list (asdf:make-operation 'asdf:load-op) (asdf:find-system 'metabang.bind)))
 
 
 (asdf::component-name (asdf:find-system 'metabang.bind))
 (asdf::map-system-connections #'print)
 (asdf::map-system-connections #'inspect)
 
-(asdf::traverse (make-instance 'asdf:load-op)
-                (asdf::find-system 'bind-and-metatilities))
-
+(asdf::traverse :load-op 'bind-and-metatilities)

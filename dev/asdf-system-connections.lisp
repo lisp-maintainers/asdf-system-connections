@@ -51,14 +51,27 @@
 ;;; ---------------------------------------------------------------------------
 
 (defun load-connected-systems (operation component)
-  (let ((connections (gethash (typecase component
-                                (string component)
-                                (symbol (string-downcase (symbol-name component)))
-                                (asdf:component (asdf:component-name component)))
-                              *system-connections*)))
+  (let* ((component (etypecase component
+                      (system
+                       component)
+                      ((or string symbol)
+                       (find-system component))
+                      (list
+                       (find-system
+                        (ecase (car component)
+                          (:version (second component))
+                          (:feature (third component)))))))
+         (deps (system-depends-on component))
+         (connections (gethash (component-name component)
+                               *system-connections*)))
+    (loop :for dep :in deps
+          :do (load-connected-systems 'asdf:load-op dep))
     (loop :for (prerequisites . connection) :in connections
           :do (when (and (not (component-loaded-p connection))
                          (every #'component-loaded-p prerequisites))
+                (dolist (prereq prerequisites)
+                  (dolist (dep (system-depends-on (find-system prereq)))
+                    (load-connected-systems operation dep)))
                 (asdf:oos operation connection)))))
 
 ;;; ---------------------------------------------------------------------------
@@ -66,13 +79,6 @@
 (defmethod operate :after ((operation t) (component t) &key &allow-other-keys)
   (when (or (eq 'asdf:load-op operation)
             (typep operation 'asdf:load-op))
-    (loop :for dep :in (system-depends-on
-                        (etypecase component
-                          (system
-                           component)
-                          ((or string symbol)
-                           (find-system component))))
-          :do (load-connected-systems 'asdf:load-op dep))
     (load-connected-systems 'asdf:load-op component)))
 
 ;;; ---------------------------------------------------------------------------

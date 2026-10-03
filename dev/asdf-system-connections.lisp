@@ -54,8 +54,19 @@
 
 ;;; ---------------------------------------------------------------------------
 
-(defmethod operate :after ((operation t) (component t) &key &allow-other-keys)
+(defvar *asdf-after-operate-hook* nil
+  "List of functions that are called by the ((ASDF:OPERATE :AFTER) T T)  method.
+Each function should take two arguments.")
+
+(defun load-connected-systems/2 (operation component)
+  (declare (ignore operation component))
   (load-connected-systems))
+
+(pushnew 'load-connected-systems/2 *asdf-after-operate-hook*)
+
+(defmethod operate :after ((operation t) (component t) &key &allow-other-keys)
+  (dolist (function *asdf-after-operate-hook*)
+    (funcall function operation component)))
 
 ;;; ---------------------------------------------------------------------------
 
